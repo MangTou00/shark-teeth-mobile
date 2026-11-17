@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#082d43">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>鲨鱼牙齿 · 海底策略助手</title>
+<style>
+:root{
+ --sea:#082d43;--deep:#061e30;--panel:#0c3546;--panel-hi:#114457;
+ --ink:#fff1cf;--dim:#a0c4c5;--mint:#74e8ca;--teal:#349b9b;--gold:#ffd27b;
+ --red:#ff9a92;--blue:#adceff;--edge:#256477;--pixel:ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+ color:var(--ink);font-size:14px;font-synthesis:none;-webkit-text-size-adjust:100%;
+}
+*{box-sizing:border-box}body{margin:0;background:var(--sea);min-width:300px;min-height:100svh;isolation:isolate}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(166deg,#14758a50 0%,transparent 35%),linear-gradient(18deg,#0d4c5f90 0%,transparent 40%),linear-gradient(180deg,#093e55 0%,#082c42 45%,#061d30 100%)}
+body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.18;background-image:linear-gradient(#80d5d908 1px,transparent 1px),linear-gradient(90deg,#80d5d908 1px,transparent 1px);background-size:6px 6px}
+button,input{font:inherit}button{color:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button{border:0;background:none}button:disabled{cursor:not-allowed}button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:4px}input:focus{outline:2px solid var(--mint);outline-offset:2px}[hidden]{display:none!important}h1,h2,h3,p{margin:0}svg{display:block}.icon{width:22px;height:22px;flex:none;pointer-events:none}button svg{pointer-events:none}input{min-width:0}::selection{background:#73e8ca;color:#072c3d}
+.ocean{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}.beam{position:absolute;top:-10%;left:9%;width:12%;height:65%;background:linear-gradient(#73eee50d,transparent);transform:skew(-24deg)}.beam.two{left:39%;width:5%;height:45%;opacity:.6}.bubble{position:absolute;width:9px;height:9px;box-shadow:inset 0 0 0 2px #7de2dc40;animation:drift 9s ease-in-out infinite}.b1{top:14%;left:12%}.b2{top:45%;left:82%;width:6px;height:6px;animation-delay:-4s}.b3{top:70%;left:6%;animation-delay:-6s}.b4{top:20%;right:7%;animation-delay:-2s}.b5{bottom:15%;right:16%;width:5px;height:5px;animation-delay:-7s}
+.reef{position:absolute;bottom:0;left:0;width:100%;height:185px;opacity:.6;fill:#051a28}.seafloor{position:absolute;bottom:0;width:100%;height:20px;background:#041925}
+.app{width:min(100%,456px);margin:0 auto;padding:18px 18px max(18px,env(safe-area-inset-bottom));padding-top:max(18px,env(safe-area-inset-top));min-height:100svh;display:flex;flex-direction:column}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex:none}.brand{display:flex;gap:10px;align-items:center}.brand-mark{width:36px;height:40px;display:grid;place-items:center;filter:drop-shadow(0 3px 0 #021d2b);color:var(--mint)}.brand-mark svg{width:26px;height:31px}.brand h1{font-size:17px;letter-spacing:1px;line-height:1.4;font-weight:800}.brand p{font:9px/1.4 var(--pixel);color:var(--mint);letter-spacing:2.1px;margin-top:3px}.icon-button{width:44px;height:44px;display:grid;place-items:center;flex:none;border:1px solid #386779;background:#0b3042;box-shadow:inset 0 0 0 2px #08293b,0 3px #031e2e}.icon-button:active{transform:translateY(2px);box-shadow:inset 0 0 0 2px #08293b,0 1px #031e2e}.icon-button .icon{width:26px;height:26px}
+.view{flex:1;display:flex;flex-direction:column;gap:14px}.frame{border:2px solid #3f9298;background:var(--panel);box-shadow:0 4px 0 #031d2e,0 0 0 1px #061f30,inset 0 0 0 2px #0a2839;position:relative}.frame:before,.frame:after{content:"";position:absolute;width:6px;height:6px;background:var(--mint);z-index:1;pointer-events:none}.frame:before{top:-2px;left:-2px}.frame:after{right:-2px;bottom:-2px}
+.setup-hero{height:122px;overflow:hidden;background:linear-gradient(0deg,#114b58,#0e3c50)}.hero-water{position:absolute;inset:0;opacity:.4;background:linear-gradient(90deg,transparent 7%,#85d6c80d 7%,#85d6c80d 10%,transparent 10%,transparent 72%,#8ae5c70d 72%,#8ae5c70d 75%,transparent 75%)}.hero-water:before{content:"";position:absolute;bottom:0;left:0;right:0;height:25px;background:#0a3041;clip-path:polygon(0 35%,12% 35%,12% 65%,21% 65%,21% 30%,29% 30%,29% 75%,46% 75%,46% 50%,54% 50%,54% 80%,69% 80%,69% 30%,81% 30%,81% 0,93% 0,93% 50%,100% 50%,100% 100%,0 100%)}.hero-label{position:relative;padding:19px 18px;z-index:1}.tiny{font-size:11px;font-weight:700;letter-spacing:.9px}.hero-label .tiny{color:var(--mint);display:flex;align-items:center;gap:7px}.square{width:6px;height:6px;display:inline-block;background:currentColor;flex:none}.hero-label h2{font-size:27px;letter-spacing:1px;margin:6px 0 4px;font-weight:850;text-shadow:2px 3px #082d3f}.hero-label p{font-size:12px;color:#b3d1c9}.setup-hero .shark-art{position:absolute;width:124px;right:10px;bottom:8px;filter:drop-shadow(0 5px 0 #06283899)}.shark-spark{animation:twinkle 3s steps(2,end) infinite}
+.picker{padding:15px 14px 14px}.picker-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.section-label{font-size:13px;font-weight:750;color:#d1e5dc}.count-button{padding:0 10px;height:36px;color:var(--mint);font-size:12px;border:1px solid #467682;background:#0a2b3d;display:flex;gap:8px;align-items:center}.caret{border:solid currentColor;border-width:0 2px 2px 0;display:inline-block;padding:3px;transform:rotate(45deg);margin-top:-3px}.tabs{display:grid;grid-template-columns:1fr 1fr;background:#062638;padding:4px;border:1px solid #215466;gap:4px;margin-bottom:13px}.tab{min-height:38px;font-size:13px;color:var(--dim);font-weight:700}.tab[aria-pressed="true"]{background:#2c716f;color:#e0ffed;box-shadow:inset 0 -2px #46a59a}.order-label{font-size:11px;color:var(--dim);display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.order-label b{font-weight:600;color:#cee2d6}.pick-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.pick-tooth{height:52px;position:relative;background:#103b4e;border:1px solid #2c5c6b;box-shadow:0 3px #052334;display:grid;place-items:center;transition:background .1s}.pick-tooth:active{transform:translateY(2px);box-shadow:0 1px #052334}.pick-tooth svg{height:36px;width:32px;color:#eee9cd;filter:drop-shadow(0 2px #889e96)}.tooth-label{position:absolute;top:9px;font:800 16px/22px var(--pixel);letter-spacing:-1px;color:#183749;z-index:1;pointer-events:none}.pick-tooth[aria-pressed="true"]{background:#693d4b;border-color:var(--red);box-shadow:0 3px #2e2437,inset 0 0 0 1px #dd898272}.pick-tooth[aria-pressed="true"] svg{color:#ffb0a0;filter:drop-shadow(0 2px #ad5b61)}.pick-tooth[aria-pressed="true"]:after{content:"";position:absolute;right:3px;top:3px;width:4px;height:4px;background:var(--red)}.selected-info{font-size:12px;color:var(--dim);display:flex;align-items:center;justify-content:center;text-align:center;gap:6px;min-height:39px;padding-top:5px}.selected-info.chosen{color:#ffc1aa}.selected-info b{font-size:15px;color:var(--red)}.selection-foot{color:#86aaae;font-size:10px;text-align:center;margin-top:2px}
+.cta{width:100%;min-height:54px;background:var(--gold);color:#143344;font-size:16px;font-weight:850;letter-spacing:.5px;border:2px solid #ffe6a6;box-shadow:0 5px #8c6946,0 7px #052231;display:flex;justify-content:center;align-items:center;gap:9px;padding:10px 14px}.cta:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px #8c6946,0 4px #052231}.cta:disabled{background:#224b59;border-color:#356272;color:#8caeb0;box-shadow:0 4px #041f30}.cta.mint{background:var(--mint);border-color:#a2ffe0;box-shadow:0 5px #367e77,0 7px #052231}.under-cta{font-size:10px;text-align:center;color:#86afb5;margin-top:10px;line-height:1.7}.setup-bottom{margin-top:0;padding-bottom:4px}.return-button{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;min-height:44px;color:var(--mint);font-size:12px;margin-top:8px}.return-button .icon{width:17px;height:17px}
+.round-info{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:40px}.trap-info{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim)}.trap-info svg{width:18px;height:22px;color:var(--red)}.trap-info strong{font-size:15px;color:#ffc0aa}.trap-info small{font-size:11px;color:#8db1b7}.small-tag{font-size:10px;letter-spacing:.6px;border:1px solid #3a6473;color:#afcecb;padding:5px 7px;white-space:nowrap}
+.advice{padding:18px 18px 17px;min-height:211px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;border-color:#41888e;--tone:var(--mint);background:linear-gradient(160deg,#12494e,#0c3545)}.advice[data-tone="probe"]{--tone:var(--gold);background:linear-gradient(160deg,#1c414c,#153447);border-color:#7d8868}.advice[data-tone="enemy"]{--tone:var(--blue);background:linear-gradient(160deg,#173e59,#102f47);border-color:#527794}.advice[data-tone="danger"]{--tone:var(--red);background:linear-gradient(160deg,#4b3743,#253044);border-color:#a07076}.advice[data-tone="win"]{--tone:var(--mint);background:linear-gradient(160deg,#18564d,#0b3845)}.advice:before,.advice:after{background:var(--tone)}.advice-status{color:var(--tone);display:flex;gap:7px;align-items:center;justify-content:center;font-size:12px;letter-spacing:1px;font-weight:800;z-index:1}.advice-main{position:relative;display:flex;justify-content:center;align-items:center;gap:11px;min-height:105px;padding:12px 0 9px}.action-word{font-size:25px;font-weight:800;color:#e7efda;letter-spacing:1px}.pixel-digit{width:48px;height:68px;color:var(--tone);filter:drop-shadow(3px 4px #021d30)}.advice-title{font-size:29px;font-weight:850;letter-spacing:1px;line-height:1.4;color:var(--tone);text-shadow:2px 3px #061f33}.advice-copy{font-size:12px;color:#c0d9d4;line-height:1.8;min-height:22px;position:relative}.advice-copy b{color:#fff0ce}.advice-water{position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,#9ef3ce06,transparent 55%)}.advice-water:after{content:"";position:absolute;width:160px;height:32px;border:3px solid #9fe6e709;bottom:23px;right:-90px;box-shadow:-26px -66px 0 6px #9fe6e703;transform:rotate(-45deg)}.advice-corner{font:9px/1 var(--pixel);letter-spacing:1px;color:#86b8ba;opacity:.6;position:absolute;top:9px;right:9px}.win-pixels{position:absolute;top:55px;left:22px;width:5px;height:5px;background:var(--gold);box-shadow:10px 13px var(--mint),-6px 53px var(--gold),280px 15px var(--mint),270px 62px var(--gold),241px -10px var(--red);animation:twinkle 1.5s steps(2,end) infinite}
+.progress-card{padding:13px 14px 12px;border:1px solid #315b6b;background:#092d40;box-shadow:0 3px #041e30}.progress-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--dim);gap:8px;margin-bottom:11px}.progress-head strong{font:700 18px/1 var(--pixel);color:#e7edd3;margin-left:4px}.progress-head .safe-count strong{color:var(--mint)}.board{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px 3px}.board-tooth{display:flex;flex-direction:column;align-items:center;position:relative;gap:3px;min-width:0}.board-tooth svg{width:19px;height:22px;color:#d6dec7;opacity:.8;filter:drop-shadow(0 2px #52767a)}.board-tooth span{font:9px/1.2 var(--pixel);color:#8cb0b7}.board-tooth.mine svg{color:#5e9c97;opacity:.7;transform:translateY(2px) scale(.87);filter:none}.board-tooth.enemy svg{color:#728aa8;opacity:.7;transform:translateY(2px) scale(.87);filter:none}.board-tooth.synced svg{color:#648590;opacity:.6;transform:translateY(2px) scale(.87);filter:none}.board-tooth.past-trap{opacity:.22}.board-tooth.trap svg{color:var(--red);opacity:1;filter:drop-shadow(0 2px #854f5c)}.board-tooth.trap span{color:var(--red);font-weight:800}.board-tooth.next:after{content:"";position:absolute;width:4px;height:4px;background:var(--mint);top:-4px;right:2px}.board-tooth.hit svg{animation:flinch .25s steps(2,end) 2}.progress-caption{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid #244e60;padding-top:9px;margin-top:11px;font-size:10px;color:#8fb4ba;min-height:24px}.progress-caption b{color:#c8ddcf;font-weight:600}.caption-order{white-space:nowrap;font:9px/1.2 var(--pixel);color:#74a6b0}
+.action-dock{margin-top:auto;padding-top:4px;position:sticky;bottom:0;padding-bottom:max(9px,env(safe-area-inset-bottom));z-index:3;background:linear-gradient(transparent,#082b40 18px,#082b40 82%,#082b40ee);isolation:isolate}.action-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:5px 1px 11px}.action-heading h3{font-size:12px;color:#dbebdc;font-weight:700}.action-heading span{font-size:10px;color:#8ab4bb}.move-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.move{min-height:103px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#e4e4c9;color:#18394b;border:2px solid #ffffdf;box-shadow:0 5px #728d8a,0 7px #031d30;position:relative}.move .move-who{font-size:10px;letter-spacing:1px;color:#476169}.move .move-number{font:900 36px/1.05 var(--pixel)}.move .move-note{font-size:10px;min-height:15px;color:#415e64}.move[data-kind="best"]{background:var(--mint);border-color:#b2ffe1;box-shadow:0 5px #378f82,0 7px #031d30;color:#0b3c49}.move[data-kind="probe"]{background:var(--gold);border-color:#ffe9b3;box-shadow:0 5px #b18a53,0 7px #031d30}.move[data-kind="danger"]{background:#503947;border-color:#bb767d;color:#ffd3bc;box-shadow:0 5px #302737,0 7px #031d30}.move[data-kind="danger"] .move-who,.move[data-kind="danger"] .move-note{color:#ffc0af}.move[data-kind="best"]:before{content:"";position:absolute;top:-7px;right:8px;width:6px;height:6px;background:#caffdf;box-shadow:0 0 10px #8dfbce77}.move:active{transform:translateY(3px);box-shadow:0 2px #426a72,0 4px #031d30}.dock-tools{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:13px}.text-button{min-height:44px;display:flex;align-items:center;justify-content:center;gap:7px;color:#a6c7c6;font-size:12px;padding:0 5px}.text-button .icon{width:17px;height:17px}.text-button:disabled{opacity:.35}.dock-footnote{font-size:9px;text-align:center;color:#6f9ea9;margin-top:-3px}.end-actions{display:grid;gap:12px;padding-top:8px}.secondary{min-height:45px;padding:10px 12px;border:1px solid #477381;background:#11384a;color:#cee4d9;font-size:13px;width:100%;display:flex;justify-content:center;align-items:center;gap:8px;box-shadow:0 3px #051f30}.game-view{gap:12px}.game-view .round-info{margin-top:-7px}
+.toast{position:fixed;left:50%;bottom:calc(232px + env(safe-area-inset-bottom));transform:translate(-50%,8px);z-index:15;background:#e5edcd;color:#15384a;padding:9px 14px;border:2px solid #fff3d4;box-shadow:0 4px #173346;font-size:12px;pointer-events:none;opacity:0;transition:opacity .16s,transform .16s;max-width:85%;text-align:center;white-space:nowrap}.toast.show{opacity:1;transform:translate(-50%,0)}
+dialog.sheet{position:fixed;inset:auto 0 0;width:min(100%,456px);max-width:456px;max-height:88dvh;margin:0 auto;padding:0;color:var(--ink);background:#0d3547;border:2px solid #569797;border-bottom:0;box-shadow:0 -8px 50px #00101c88;overflow-y:auto;overscroll-behavior:contain}dialog::backdrop{background:#021725c9;backdrop-filter:blur(3px)}.sheet-inner{padding:17px 18px max(22px,env(safe-area-inset-bottom))}.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.sheet-head h2{font-size:19px;font-weight:800}.sheet-head .icon-button{border:0;background:transparent;box-shadow:none}.sheet-sub{color:var(--dim);font-size:12px;line-height:1.8;margin:-5px 0 15px}.menu-list{display:flex;flex-direction:column;gap:8px}.menu-item{border:1px solid #366375;background:#123e51;min-height:54px;display:flex;align-items:center;gap:12px;text-align:left;padding:11px 13px;font-size:14px}.menu-item>svg{color:var(--mint);width:20px;height:24px;flex:none}.menu-item .icon{height:20px}.menu-item .menu-arrow{margin-left:auto;color:#81acb5;font-size:18px}.menu-item:disabled{opacity:.4}.field-label{display:block;color:#cae0d6;font-size:13px;margin-bottom:9px}.number-stepper{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;margin:15px 0}.stepper-btn{background:#245367;border:1px solid #558693;display:grid;place-items:center;min-height:54px;font-size:24px}.number-input{font:700 27px/1 var(--pixel);text-align:center;padding:12px;width:100%;border:1px solid #5b8c96;color:var(--ink);border-radius:0;background:#07283a;-moz-appearance:textfield}.number-input::-webkit-inner-spin-button{appearance:none}.field-error{color:var(--red);font-size:12px;line-height:1.8;min-height:25px;margin:7px 0}.radio-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.radio-label{display:flex;align-items:center;justify-content:center;gap:7px;min-height:47px;border:1px solid #416d7b;background:#0b2d40;color:#bed7d0;font-size:13px}.radio-label:has(input:checked){background:#245e60;border-color:var(--mint);color:#f2ffe0}.radio-label input{accent-color:var(--mint);width:16px;height:16px}.history-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}.history-list li{padding:12px 10px;background:#0a2c3e;border:1px solid #285266;font-size:12px;display:flex;justify-content:space-between;gap:10px;line-height:1.7}.history-list small{color:#9ebec1}.history-list b{color:var(--mint)}.rules-text{font-size:13px;line-height:1.9;color:#bed4d0}.rules-text p+p{margin-top:14px}.rules-text strong{color:#f3e8c5}.rules-text .disclaimer{font-size:11px;color:#85aab1;padding-top:16px;border-top:1px solid #305769;margin-top:20px}
+@keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-17px)}}@keyframes twinkle{0%,100%{opacity:.9}50%{opacity:.25}}@keyframes flinch{0%,100%{transform:translateX(0)}50%{transform:translateX(-4px)}}
+@media(hover:hover){.pick-tooth:hover{background:#20596a;border-color:#5bb4b1}.pick-tooth[aria-pressed="true"]:hover{background:#774752}.move:hover{filter:brightness(1.06)}.tab:hover{color:#e7ffe7}.menu-item:hover:not(:disabled){background:#1c4d60}}
+@media(min-width:600px){.app{padding-top:30px;min-height:min(910px,100svh);padding-bottom:25px}.view{gap:16px}.setup-hero{height:133px}.hero-label{padding-top:23px}.setup-hero .shark-art{width:137px;right:18px}.pick-tooth{height:59px}.picker{padding:17px}.advice{min-height:236px}.action-dock{margin-top:16px}.game-view{gap:15px}}
+@media(max-width:359px){.app{padding-left:13px;padding-right:13px}.picker{padding:12px 10px}.pick-grid{gap:6px}.hero-label{padding-left:13px}.hero-label h2{font-size:25px}.setup-hero .shark-art{width:109px;right:3px}.brand h1{font-size:16px}.advice-title{font-size:25px}.advice{padding:15px 12px}.trap-info{gap:6px}.trap-info small{font-size:10px}.move-grid{gap:8px}.small-tag{font-size:9px;padding:5px}.progress-card{padding-left:10px;padding-right:10px}}
+@media(max-height:720px){.app{padding-top:max(11px,env(safe-area-inset-top));padding-bottom:max(10px,env(safe-area-inset-bottom))}.topbar{margin-bottom:12px}.view{gap:11px}.setup-hero{height:98px}.hero-label{padding-top:12px}.hero-label h2{font-size:25px;margin:4px 0}.setup-hero .shark-art{width:103px;bottom:5px}.pick-tooth{height:48px}.picker{padding-top:12px;padding-bottom:10px}.picker-head{margin-bottom:9px}.tabs{margin-bottom:10px}.tab{min-height:33px}.advice{min-height:181px;padding-top:13px;padding-bottom:12px}.advice-main{min-height:87px}.pixel-digit{height:58px;width:42px}.move{min-height:87px}.dock-tools{margin-top:10px}.game-view{gap:10px}.action-dock{padding-top:0}.board{gap:6px 3px}.board-tooth svg{height:19px;width:17px}.progress-card{padding-top:11px;padding-bottom:9px}.progress-caption{margin-top:9px;padding-top:8px}.cta{min-height:49px}}
+
+/* Short screens retain natural flow: never float controls over the tooth board. */
+@media(max-height:720px){
+ .action-dock{position:static}.topbar{margin-bottom:10px}.setup-hero{height:92px}
+ .picker-head{margin-bottom:8px}.tabs{margin-bottom:8px}.order-label{margin-bottom:7px}
+ .pick-grid{gap:6px}.pick-tooth{height:46px}.selected-info{min-height:35px}
+ .under-cta,.dock-footnote{display:none}
+}
+@media(max-height:620px){
+ .view{gap:8px}.setup-hero{height:74px}.hero-label{padding-top:9px;padding-bottom:7px}
+ .hero-label .tiny{font-size:10px}.hero-label h2{font-size:23px;margin-top:3px}.hero-label p{display:none}
+ .setup-hero .shark-art{width:78px;right:13px;bottom:1px}
+ .picker{padding:10px}.count-button{height:32px}.tabs{padding:3px}.tab{min-height:30px}
+ .order-label{display:none}.pick-grid{gap:5px}.pick-tooth{height:44px}
+ .pick-tooth svg{height:32px;width:28px}.tooth-label{top:7px;font-size:15px}
+ .selected-info{min-height:32px;font-size:11px}.selected-info b{font-size:14px}
+ .cta{min-height:46px}.game-view .round-info{min-height:32px}
+ .advice{min-height:145px;padding:10px 11px}.advice-status{font-size:11px}.advice-main{min-height:74px;padding:8px 0}
+ .pixel-digit{height:50px;width:36px}.action-word{font-size:23px}.advice-title{font-size:24px}
+ .advice-copy{font-size:11px;line-height:1.7;min-height:19px}
+ .progress-card{padding:10px}.progress-head{margin-bottom:8px}.progress-caption{display:none}
+ .move{min-height:80px}.move .move-number{font-size:32px}.action-heading{margin:4px 0 9px}
+ .dock-tools{margin-top:9px}.action-dock{padding-bottom:5px}
+}
+
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="ocean" aria-hidden="true"><div class="beam"></div><div class="beam two"></div><i class="bubble b1"></i><i class="bubble b2"></i><i class="bubble b3"></i><i class="bubble b4"></i><i class="bubble b5"></i><svg class="reef" viewBox="0 0 1200 200" preserveAspectRatio="none" shape-rendering="crispEdges"><path d="M0 200V120h20V86h14v32h10V68h14v76h18v-40h10v60h24v-50h12v38h15v48Zm1200 0V112h-20V72h-12v50h-12V54h-13v112h-16v-58h-13v39h-20v53ZM140 200v-32h30v-15h42v23h30v24Zm830 0v-26h24v-19h35v-35h15v80Z"/></svg><div class="seafloor"></div></div>
+<div class="app">
+<header class="topbar"><div class="brand"><span class="brand-mark"><svg viewBox="0 0 28 32" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 2h8v2h4V2h8v4h2v12h-2v8h-4v4h-4V20h-4v10H8v-4H4v-8H2V6h2Z" fill="currentColor"/><path d="M6 6h4v2H6v8H4V8h2Z" fill="#fff" opacity=".55"/><path d="M22 6h2v12h-2v8h-4v-4h2V12h2Z" fill="#162d3e" opacity=".18"/></svg></span><div><h1>鲨鱼牙齿</h1><p>SHARK TOOTH TACTICS</p></div></div><button id="menuBtn" class="icon-button" type="button" aria-label="打开更多功能"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 10h2v2H5zm6 0h2v2h-2zm6 0h2v2h-2z"/></svg></button></header>
+<main id="setupView" class="view">
+ <section class="frame setup-hero" aria-labelledby="setupTitle"><div class="hero-water"></div><div class="hero-label"><div class="tiny"><i class="square"></i> 你固定先手</div><h2 id="setupTitle">先选坏牙</h2><p>选好位置，再帮你出招。</p></div><svg class="shark-art" viewBox="0 0 116 96" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" aria-hidden="true">
+<path d="M46 10h20V2h8v16h14v8h10v12h8v36h-8v12H86v6H28v-6H16V74H8V42h8V28h12V18h18Z" fill="#051b30"/>
+<path d="M46 14h22V8h2v14h16v8h10v12h6v28h-8v12H82v6H30v-6H20V70h-8V44h8V32h12V22h14Z" fill="#577a86"/>
+<path d="M36 26h42v4h14v14h6v18H18V44h6V34h12Z" fill="#91adb0"/>
+<path d="M42 22h26v4H46v6H32v8h-8v-8h12v-6h6Z" fill="#bdd5cd"/>
+<path d="M28 48h12v8H28Zm48 0h12v8H76Z" fill="#102b3b"/>
+<path d="M28 48h4v4h-4Zm48 0h4v4h-4Z" fill="#fff5cb"/>
+<path d="M34 42h8v4h-8Zm40 0h8v4h-8Z" fill="#456979"/>
+<path d="M28 60h60v8h6v12H80v8H34v-8H22V68h6Z" fill="#e9e4bc"/>
+<path d="M32 60h52v8h4v12H28V68h4Z" fill="#132737"/>
+<path d="M32 60h8v10h-4v-4h-4Zm12 0h8v10h-4v-4h-4Zm12 0h8v10h-4v-4h-4Zm12 0h8v10h-4v-4h-4Zm12 0h4v8h-4Z" fill="#fff3d0"/>
+<path d="M32 80v-8h4v-4h4v12Zm12 0v-8h4v-4h4v12Zm12 0v-8h4v-4h4v12Zm12 0v-8h4v-4h4v12Zm12 0v-8h4v-4h4v12Z" fill="#fff3d0"/>
+<path d="M38 84h40v4H38Z" fill="#c2c69e"/>
+<path class="shark-spark" d="M4 12h4v4h4v4H8v4H4v-4H0v-4h4Zm102 0h4v4h4v4h-4v4h-4v-4h-4v-4h4Z" fill="#f4cb73"/>
+</svg></section>
+ <section class="frame picker" aria-label="选择坏牙位置">
+  <div class="picker-head"><span class="section-label">坏牙是第几颗？</span><button id="totalBtn" class="count-button" type="button" aria-label="修改牙齿总数"><span id="totalLabel">共 20 颗</span><i class="caret"></i></button></div>
+  <div class="tabs" role="group" aria-label="牙齿计数方向"><button id="modeStart" type="button" class="tab" aria-pressed="false">从头数</button><button id="modeEnd" type="button" class="tab" aria-pressed="true">倒着数</button></div>
+  <div class="order-label"><b id="pickerOrder">点击「倒数第几颗」</b><span>按下顺序，不是屏幕位置</span></div>
+  <div id="pickGrid" class="pick-grid"></div>
+  <div id="selectedInfo" class="selected-info" aria-live="polite">尚未选择坏牙</div>
+ </section>
+ <div class="setup-bottom"><button id="startBtn" class="cta" type="button" disabled><span id="startLabel">先点选一颗坏牙</span><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button><p class="under-cta">每回合 1–3 颗 · 碰到坏牙的人输</p><button id="backToGame" class="return-button" type="button" hidden><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M19 12H5m6-6-6 6 6 6"/></svg>返回当前对局</button></div>
+</main>
+<main id="gameView" class="view game-view" hidden>
+ <div class="round-info"><div class="trap-info"><svg viewBox="0 0 28 32" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 2h8v2h4V2h8v4h2v12h-2v8h-4v4h-4V20h-4v10H8v-4H4v-8H2V6h2Z" fill="currentColor"/><path d="M6 6h4v2H6v8H4V8h2Z" fill="#fff" opacity=".55"/><path d="M22 6h2v12h-2v8h-4v-4h2V12h2Z" fill="#162d3e" opacity=".18"/></svg><span>坏牙 <strong id="trapLabel"></strong> <small id="trapOrdinal"></small></span></div><span class="small-tag" id="roundTag">你先手</span></div>
+ <section id="advice" class="frame advice" data-tone="probe" aria-live="polite" aria-atomic="true">
+  <div class="advice-water"></div><span class="advice-corner">LIVE</span>
+  <div class="advice-status"><i class="square"></i><span id="statusText"></span></div>
+  <div id="adviceMain" class="advice-main"></div><p id="adviceCopy" class="advice-copy"></p>
+  <div id="winPixels" class="win-pixels" hidden></div>
+ </section>
+ <section class="progress-card" aria-label="牙齿进度"><div class="progress-head"><span>已按<strong id="pressedValue">0</strong></span><span class="safe-count">剩余安全牙<strong id="safeValue">0</strong></span></div><div id="board" class="board"></div><div class="progress-caption"><span id="lastMove">还没开始，轮到你。</span><span class="caption-order">1 → <span id="boardTotal">20</span></span></div></section>
+ <section class="action-dock" aria-label="记录本回合">
+  <div id="moveControls"><div class="action-heading"><h3 id="actionTitle"></h3><span>在游戏里按完再点</span></div><div id="moveGrid" class="move-grid"></div></div>
+  <div id="endControls" class="end-actions" hidden><button id="nextRoundBtn" class="cta mint" type="button">下一局 · 重选坏牙 <svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button><button id="sameAgainBtn" class="secondary" type="button"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg>同样坏牙再来一局</button></div>
+  <div class="dock-tools"><button id="undoBtn" class="text-button" type="button"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M8 4 3 9l5 5M3 9h10a6 6 0 0 1 0 12"/></svg>撤销</button><button id="reselectBtn" class="text-button" type="button">重选坏牙 <svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div><div class="dock-footnote">只是记分与策略，不会操作游戏</div>
+ </section>
+</main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<dialog id="menuSheet" class="sheet" aria-labelledby="menuTitle"><div class="sheet-inner"><div class="sheet-head"><h2 id="menuTitle">对局工具</h2><button type="button" class="icon-button" data-close aria-label="关闭"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="menu-list">
+<button id="menuSync" class="menu-item" type="button"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 7h16M4 17h16M8 4v6m8 4v6"/></svg>校准当前进度<span class="menu-arrow">›</span></button>
+<button id="menuHistory" class="menu-item" type="button"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M9 6h11M9 12h11M9 18h11M4 6h1m-1 6h1m-1 6h1"/></svg>查看对局记录<span class="menu-arrow">›</span></button>
+<button id="menuRestart" class="menu-item" type="button"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg>重开同一局<span class="menu-arrow">›</span></button>
+<button id="menuPick" class="menu-item" type="button"><svg viewBox="0 0 28 32" shape-rendering="crispEdges" aria-hidden="true"><path d="M4 2h8v2h4V2h8v4h2v12h-2v8h-4v4h-4V20h-4v10H8v-4H4v-8H2V6h2Z" fill="currentColor"/><path d="M6 6h4v2H6v8H4V8h2Z" fill="#fff" opacity=".55"/><path d="M22 6h2v12h-2v8h-4v-4h2V12h2Z" fill="#162d3e" opacity=".18"/></svg>重选坏牙<span class="menu-arrow">›</span></button>
+<button id="menuRules" class="menu-item" type="button"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 11v6m0-11v1"/><path d="M7 3h10l4 4v10l-4 4H7l-4-4V7z"/></svg>规则与策略<span class="menu-arrow">›</span></button>
+</div></div></dialog>
+<dialog id="totalSheet" class="sheet" aria-labelledby="totalTitle"><div class="sheet-inner"><div class="sheet-head"><h2 id="totalTitle">总共有多少颗牙？</h2><button type="button" class="icon-button" data-close aria-label="关闭"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><p class="sheet-sub">只修改总数。坏牙仍由你手动选择。</p><form id="totalForm" novalidate><div class="number-stepper"><button type="button" class="stepper-btn" id="lessTotal" aria-label="减少一颗"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 12h12"/></svg></button><input id="totalInput" class="number-input" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="60" aria-label="牙齿总数" value="20"><button type="button" class="stepper-btn" id="moreTotal" aria-label="增加一颗"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 12h12M12 6v12"/></svg></button></div><div id="totalError" class="field-error" role="alert"></div><button class="cta" type="submit">应用总数</button></form></div></dialog>
+<dialog id="syncSheet" class="sheet" aria-labelledby="syncTitle"><div class="sheet-inner"><div class="sheet-head"><h2 id="syncTitle">校准当前进度</h2><button type="button" class="icon-button" data-close aria-label="关闭"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><form id="syncForm" novalidate><label class="field-label" for="syncInput">累计已经按了几颗安全牙？</label><input id="syncInput" class="number-input" type="number" inputmode="numeric" min="0"><div class="field-label" style="margin-top:18px">接下来轮到谁？</div><div class="radio-pair"><label class="radio-label"><input type="radio" name="syncTurn" value="me" checked>轮到我</label><label class="radio-label"><input type="radio" name="syncTurn" value="enemy">轮到敌人</label></div><div id="syncError" class="field-error" role="alert"></div><button class="cta" type="submit">应用进度</button></form></div></dialog>
+<dialog id="historySheet" class="sheet" aria-labelledby="historyTitle"><div class="sheet-inner"><div class="sheet-head"><h2 id="historyTitle">对局记录</h2><button type="button" class="icon-button" data-close aria-label="关闭"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><ul id="historyList" class="history-list"></ul></div></dialog>
+<dialog id="restartSheet" class="sheet" aria-labelledby="restartTitle"><div class="sheet-inner"><div class="sheet-head"><h2 id="restartTitle">重新开始这一局？</h2><button type="button" class="icon-button" data-close aria-label="关闭"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><p class="sheet-sub">坏牙位置保持不变，清空本局记录。仍由你先手。</p><button id="applyRestart" class="cta" type="button">重新开始</button></div></dialog>
+<dialog id="rulesSheet" class="sheet" aria-labelledby="rulesTitle"><div class="sheet-inner"><div class="sheet-head"><h2 id="rulesTitle">把危险留给他</h2><button type="button" class="icon-button" data-close aria-label="关闭"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="rules-text"><p>双方轮流按<strong>连续的 1–3 颗牙</strong>，按到坏牙就输。每局固定由你先手。</p><p>轮到你时，设坏牙前还有 <strong>S 颗安全牙</strong>。若 S 除以 4 的余数是 1、2 或 3，就按这么多颗，把 4 的倍数留给敌人。之后两人每轮合计按 4 颗，即可保持必胜。</p><p>若 S 恰好是 4 的倍数，双方都最优时你无法保证赢。页面建议按 1 只是试探，<strong>并不比按 2 或 3 更有数学优势</strong>。敌人失误后，页面会提示必胜走法。</p><p>选牙页的数字是<strong>按下顺序</strong>，不是牙齿在游戏画面里的空间位置。总共 N 颗牙时，倒数第 k 颗就是第 N−k＋1 颗。</p><p class="disclaimer">非官方离线小工具，像素海底主题。无需联网；不连接或操控游戏。刷新页面会回到选牙页，可用“校准进度”接续对局。键盘 1 / 2 / 3 记录，Z 撤销。</p></div></div></dialog>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const TOOTH = "<svg viewBox=\"0 0 28 32\" shape-rendering=\"crispEdges\" aria-hidden=\"true\"><path d=\"M4 2h8v2h4V2h8v4h2v12h-2v8h-4v4h-4V20h-4v10H8v-4H4v-8H2V6h2Z\" fill=\"currentColor\"/><path d=\"M6 6h4v2H6v8H4V8h2Z\" fill=\"#fff\" opacity=\".55\"/><path d=\"M22 6h2v12h-2v8h-4v-4h2V12h2Z\" fill=\"#162d3e\" opacity=\".18\"/></svg>";
+const DIGITS = {'1':['00100','01100','00100','00100','00100','00100','01110'],'2':['11110','00001','00001','01110','10000','10000','11111'],'3':['11110','00001','00001','01110','00001','00001','11110']};
+let draft = {total:20, target:null, mode:'end'};
+let game = null;
+let screen = 'setup';
+let toastTimer;
+function analyse(safe){
+ if(safe <= 0) return {winning:false,recommended:null};
+ const r=safe%4;return {winning:r!==0,recommended:r||1};
+}
+function replay(g){
+ const s={total:g.total,target:g.target,pressed:0,turn:'me',ended:false,loser:null,owners:{},history:[],moveCount:0};
+ for(const a of g.actions){
+  if(a.type==='sync'){
+   s.pressed=a.pressed;s.turn=a.turn;s.ended=false;s.loser=null;s.owners={};
+   for(let i=1;i<=s.pressed;i++)s.owners[i]='synced';
+   s.history.push({...a});continue;
+  }
+  if(s.ended)continue;
+  const before=s.pressed,who=s.turn,after=Math.min(s.target,before+a.count),hit=after===s.target;
+  for(let i=before+1;i<=after;i++)s.owners[i]=who;
+  s.pressed=after;s.moveCount++;
+  s.history.push({type:'move',count:a.count,who,before,after,hit});
+  if(hit){s.ended=true;s.loser=who;}else s.turn=who==='me'?'enemy':'me';
+ }
+ s.safe=Math.max(0,s.target-1-s.pressed);return s;
+}
+function digitSVG(n){
+ let cells='';DIGITS[String(n)].forEach((row,y)=>[...row].forEach((v,x)=>{if(v==='1')cells+=`<rect x="${x*5}" y="${y*5}" width="5" height="5"/>`;}));
+ return `<svg class="pixel-digit" viewBox="0 0 25 35" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">${cells}</svg>`;
+}
+function toast(text){clearTimeout(toastTimer);$('toast').textContent=text;$('toast').classList.add('show');toastTimer=setTimeout(()=>$('toast').classList.remove('show'),1600);}
+function renderPicker(){
+ $('totalLabel').textContent=`共 ${draft.total} 颗`;
+ $('modeStart').setAttribute('aria-pressed',String(draft.mode==='start'));$('modeEnd').setAttribute('aria-pressed',String(draft.mode==='end'));
+ $('pickerOrder').textContent=draft.mode==='end'?'点击「倒数第几颗」':'点击「从头第几颗」';
+ $('pickGrid').replaceChildren();
+ for(let label=1;label<=draft.total;label++){
+  const target=draft.mode==='end'?draft.total-label+1:label;
+  const btn=document.createElement('button');btn.type='button';btn.className='pick-tooth';btn.dataset.target=target;btn.dataset.label=label;
+  btn.setAttribute('aria-pressed',String(target===draft.target));btn.setAttribute('aria-label',`${draft.mode==='end'?'倒数':'从头'}第 ${label} 颗`);
+  btn.innerHTML=TOOTH+`<span class="tooth-label">${label}</span>`;
+  btn.addEventListener('click',()=>selectTarget(target));$('pickGrid').append(btn);
+ }
+ renderSelection();$('backToGame').hidden=!game;
+}
+function selectTarget(target){
+ draft.target=target;
+ for(const btn of $('pickGrid').children)btn.setAttribute('aria-pressed',String(Number(btn.dataset.target)===target));
+ renderSelection();
+}
+function renderSelection(){
+ const selected=Number.isInteger(draft.target)&&draft.target>=1&&draft.target<=draft.total;
+ $('startBtn').disabled=!selected;$('startLabel').textContent=selected?'开始 · 我先手':'先点选一颗坏牙';
+ $('selectedInfo').className='selected-info'+(selected?' chosen':'');
+ $('selectedInfo').innerHTML=selected?`坏牙：倒数第 <b>${draft.total-draft.target+1}</b> 颗 <span style="opacity:.55">/</span> 从头第 <b>${draft.target}</b> 颗`:'尚未选择坏牙';
+}
+function changeScreen(next){screen=next;$('setupView').hidden=next!=='setup';$('gameView').hidden=next!=='game';$('toast').classList.remove('show');window.scrollTo({top:0,behavior:'instant'});}
+function chooseNew(){
+ if(game)draft.total=game.total;
+ draft.target=null;renderPicker();changeScreen('setup');
+}
+function startGame(){
+ if(!Number.isInteger(draft.target)||draft.target<1||draft.target>draft.total)return;
+ game={total:draft.total,target:draft.target,actions:[]};renderGame();changeScreen('game');
+}
+function adviceFor(s){
+ if(s.ended)return s.loser==='enemy'
+ ?{tone:'win',status:'本局获胜',title:'你赢了！',copy:'敌人碰到坏牙，成功过关。'}
+ :{tone:'danger',status:'本局结束',title:'被咬到了…',copy:'录错了？点「撤销」就能回到上一手。'};
+ if(s.turn==='enemy'){
+  if(s.safe===0)return {tone:'win',status:'敌人回合 · 已锁定胜局',title:'他下一手必输',copy:'下一颗就是坏牙。记录敌人的选择即可。'};
+  return {tone:'enemy',status:'敌人回合',title:'他按了几颗？',copy:s.safe%4===0?'你已占优。记录他的选择，再按下一步提示走。':'等他出招，记录后再算你的下一手。'};
+ }
+ if(s.safe===0)return {tone:'danger',status:'你的回合 · 无安全走法',title:'下一颗是坏牙',copy:'按 1、2、3 都会输。先检查进度是否录错。'};
+ const a=analyse(s.safe);
+ if(a.winning)return {tone:'best',status:'你的回合 · 有必胜走法',number:a.recommended,word:'按',copy:s.safe===a.recommended?'按完，敌人下一手只能碰坏牙。':`留下 <b>${s.safe-a.recommended}</b> 颗安全牙给敌人。`};
+ return {tone:'probe',status:'你的回合 · 等敌人失误',number:1,word:'试按',copy:'1 / 2 / 3 都无法保胜；先按 1 试探。'};
+}
+function renderGame(){
+ if(!game)return;const s=replay(game),a=analyse(s.safe),v=adviceFor(s);
+ $('trapLabel').textContent=`倒 ${s.total-s.target+1}`;$('trapOrdinal').textContent=`/ 第 ${s.target} 颗`;
+ $('roundTag').textContent=s.ended?'本局结束':`第 ${s.moveCount+1} 手`;
+ if(game.actions.some(x=>x.type==='sync')&&!s.ended)$('roundTag').textContent='已校准';
+ $('advice').dataset.tone=v.tone;$('statusText').textContent=v.status;
+ $('adviceMain').innerHTML=v.number?`<span class="action-word">${v.word}</span>${digitSVG(v.number)}<span class="action-word">颗</span>`:`<h2 class="advice-title">${v.title}</h2>`;
+ $('adviceMain').setAttribute('aria-label',v.number?`${v.word} ${v.number} 颗`:v.title);
+ $('adviceCopy').innerHTML=v.copy;$('winPixels').hidden=!(s.ended&&s.loser==='enemy');
+ $('pressedValue').textContent=s.pressed;$('safeValue').textContent=s.safe;$('boardTotal').textContent=s.total;
+ $('board').replaceChildren();
+ for(let n=1;n<=s.total;n++){
+  const t=document.createElement('div');let cls='board-tooth';
+  if(s.owners[n])cls+=' '+(s.owners[n]==='me'?'mine':s.owners[n]);
+  if(n===s.target)cls+=' trap';if(n>s.target)cls+=' past-trap';if(!s.ended&&n===s.pressed+1)cls+=' next';if(s.ended&&n===s.target)cls+=' hit';
+  t.className=cls;t.dataset.tooth=n;t.innerHTML=TOOTH+`<span>${n}</span>`;t.setAttribute('aria-label',`第 ${n} 颗${n===s.target?'，坏牙':s.owners[n]?'，已按':''}`);$('board').append(t);
+ }
+ const last=s.history.at(-1);
+ $('lastMove').innerHTML=!last?'还没开始，轮到你。':last.type==='sync'?`已校准到 <b>${last.pressed}</b> 颗`:`刚才：<b>${last.who==='me'?'你':'敌人'}按 ${last.count} 颗</b>${last.hit?' · 触发坏牙':''}`;
+ $('moveControls').hidden=s.ended;$('endControls').hidden=!s.ended;
+ $('actionTitle').textContent=s.turn==='me'?'记录你按了几颗':'记录敌人按了几颗';
+ $('moveGrid').replaceChildren();
+ for(let count=1;count<=3;count++){
+  const b=document.createElement('button');b.type='button';b.className='move';b.id=`move${count}`;b.dataset.count=count;
+  const unsafe=count>s.safe,recommended=s.turn==='me'&&count===a.recommended;
+  b.dataset.kind=unsafe?'danger':recommended?(a.winning?'best':'probe'):'plain';
+  const note=unsafe?(s.turn==='enemy'?'敌人会被咬':'会碰坏牙'):s.turn==='enemy'?'点此记录':recommended?(a.winning?'推荐这一步':'试探，不保胜'):a.winning?'安全，失去优势':'安全，不保胜';
+  b.innerHTML=`<span class="move-who">${s.turn==='me'?'我按':'敌人按'}</span><span class="move-number">${count}</span><span class="move-note">${note}</span>`;
+  b.setAttribute('aria-label',`${s.turn==='me'?'我':'敌人'}按 ${count} 颗，${note}`);b.disabled=s.ended;
+  b.addEventListener('click',e=>{if(e.detail>1)return;recordMove(count);});$('moveGrid').append(b);
+ }
+ $('undoBtn').disabled=game.actions.length===0;
+}
+function recordMove(count){
+ if(screen!=='game'||!game||document.querySelector('dialog[open]'))return;
+ if(![1,2,3].includes(count)||replay(game).ended)return;
+ game.actions.push({type:'move',count});renderGame();
+}
+function undo(){if(!game||!game.actions.length)return;game.actions.pop();renderGame();toast('已撤销上一条记录');}
+function openSheet(id){$(id).showModal();}
+function closeMenuThen(id){$('menuSheet').close();openSheet(id);}
+function openMenu(){const enabled=!!game&&screen==='game';for(const id of ['menuSync','menuHistory','menuRestart'])$(id).disabled=!enabled;$('menuPick').disabled=screen==='setup';openSheet('menuSheet');}
+function openHistory(){
+ const s=replay(game);$('historyList').replaceChildren();
+ if(!s.history.length){const li=document.createElement('li');li.textContent='还没有记录，先手是你。';$('historyList').append(li);}
+ [...s.history].reverse().forEach((h,i)=>{const li=document.createElement('li');li.innerHTML=h.type==='sync'?`<span>校准到 <b>${h.pressed}</b> 颗<small> · 轮到${h.turn==='me'?'你':'敌人'}</small></span><small>校准</small>`:`<span>${h.who==='me'?'你':'敌人'}按 <b>${h.count}</b> 颗<small> · 第 ${h.before+1}${h.after>h.before+1?'–'+h.after:''} 颗</small></span><small>${h.hit?'触发坏牙':'累计 '+h.after}</small>`;$('historyList').append(li);});
+ closeMenuThen('historySheet');
+}
+function openSync(){const s=replay(game);$('syncInput').value=Math.min(s.pressed,s.target-1);$('syncInput').max=s.target-1;document.querySelector(`input[name="syncTurn"][value="${s.ended?'me':s.turn}"]`).checked=true;$('syncError').textContent='';closeMenuThen('syncSheet');}
+function resetSame(){if(!game)return;game.actions=[];renderGame();changeScreen('game');}
+$('menuBtn').addEventListener('click',openMenu);
+$('modeStart').addEventListener('click',()=>{draft.mode='start';renderPicker();});
+$('modeEnd').addEventListener('click',()=>{draft.mode='end';renderPicker();});
+$('startBtn').addEventListener('click',startGame);
+$('totalBtn').addEventListener('click',()=>{$('totalInput').value=draft.total;$('totalError').textContent='';openSheet('totalSheet');});
+$('lessTotal').addEventListener('click',()=>{$('totalInput').value=Math.max(1,(Number($('totalInput').value)||draft.total)-1);});
+$('moreTotal').addEventListener('click',()=>{$('totalInput').value=Math.min(60,(Number($('totalInput').value)||draft.total)+1);});
+$('totalForm').addEventListener('submit',e=>{e.preventDefault();const raw=$('totalInput').value,total=Number(raw);if(raw===''||!Number.isInteger(total)||total<1||total>60){$('totalError').textContent='请输入 1–60 之间的整数。';return;}if(total!==draft.total){draft.total=total;draft.target=null;}renderPicker();$('totalSheet').close();});
+$('reselectBtn').addEventListener('click',chooseNew);$('nextRoundBtn').addEventListener('click',chooseNew);
+$('backToGame').addEventListener('click',()=>{if(game){renderGame();changeScreen('game');}});
+$('sameAgainBtn').addEventListener('click',resetSame);$('undoBtn').addEventListener('click',undo);
+$('menuPick').addEventListener('click',()=>{$('menuSheet').close();chooseNew();});
+$('menuRules').addEventListener('click',()=>closeMenuThen('rulesSheet'));
+$('menuHistory').addEventListener('click',openHistory);$('menuSync').addEventListener('click',openSync);
+$('menuRestart').addEventListener('click',()=>closeMenuThen('restartSheet'));
+$('applyRestart').addEventListener('click',()=>{$('restartSheet').close();resetSame();});
+$('syncForm').addEventListener('submit',e=>{e.preventDefault();if(!game)return;const raw=$('syncInput').value,pressed=Number(raw),turn=document.querySelector('input[name="syncTurn"]:checked').value;
+ if(raw===''||!Number.isInteger(pressed)||pressed<0||pressed>=game.target){$('syncError').textContent=`请输入 0–${game.target-1} 之间的整数，不包含坏牙。`;return;}
+ game.actions.push({type:'sync',pressed,turn});$('syncSheet').close();renderGame();toast('进度已校准');
+});
+for(const btn of document.querySelectorAll('[data-close]'))btn.addEventListener('click',()=>btn.closest('dialog').close());
+for(const d of document.querySelectorAll('dialog'))d.addEventListener('click',e=>{if(e.target!==d)return;const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();});
+document.addEventListener('keydown',e=>{
+ if(e.repeat||e.ctrlKey||e.metaKey||e.altKey||e.isComposing||document.querySelector('dialog[open]')||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)||screen!=='game')return;
+ if(['1','2','3'].includes(e.key)){e.preventDefault();recordMove(Number(e.key));}
+ else if(e.key.toLowerCase()==='z'){e.preventDefault();undo();}
+});
+renderPicker();
+// Pure strategy helpers exposed for local regression tests; they never operate the real game.
+window.SharkStrategy={analyse,replay};
+</script>
+</body>
+</html>
